@@ -17,7 +17,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
    (git を入れて `~/ubuntu-setup` に clone し、`setup.sh` を実行する。手動でやる場合は `git clone https://github.com/yujiro/ubuntu-setup.git ~/ubuntu-setup && ~/ubuntu-setup/setup.sh`)
 
    途中で聞かれるもの: sudo パスワード、RDP 用のユーザー名/パスワード、GNOME 拡張のインストール確認ダイアログ。
-3. **ログアウト → ログイン**(日本語入力と docker グループが有効になる)
+3. **再起動**(日本語入力、docker / render グループが有効になる。ログアウトだけでは GPU のグループが反映されないことがある)
 4. **Mac 側(初回のみ)**: [mac/README.md](mac/README.md) の手順で Karabiner-Elements にルールを入れる(貼り付け用は `mac/paste-rule-*.json`)
 5. 手作業で残るもの: `gh auth login` / `sudo tailscale up` / 1Password・Chrome・Claude へのサインイン
 
@@ -50,6 +50,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 - Karabiner が効かないときは、まず macOS の「入力監視」に Karabiner-Core-Service(旧 karabiner_grabber)があるか確認。
 - Karabiner の assets JSON を書き換えても有効中のルールには反映されない。ルールを削除 → Add predefined rule で入れ直す。
 - **Option+F4 (Alt+F4) も届かない。** 確実に届くのは `Ctrl+Option+Shift+<キー>` の形 → 中継キーはこの形に統一している。
+- **RDP セッションは GPU を使えず、ソフトウェア描画になって重い。** ユーザーを `render`,`video` グループに入れて再起動すると直る(モジュール40に組み込み済み)。確認: `top -H -p $(pgrep -x gnome-shell)` に `llvmpipe` スレッドが居なければ OK。
 - どのキーが届いているかは `GTK_IM_MODULE=xim xev -event keyboard` で確認できる。
 
 ## メンテナンス

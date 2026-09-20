@@ -26,6 +26,13 @@ read -r -s -p "  RDP パスワード: " rdp_pass; echo
 sudo grdctl --system rdp set-credentials "$rdp_user" "$rdp_pass"
 unset rdp_pass
 
+log "リモートセッションで GPU を使えるようにする"
+# 実機ログインでは logind が /dev/dri に ACL を付けるが、RDP のリモートログインには付かない。
+# render グループに入っていないと GNOME Shell がソフトウェア描画(llvmpipe)になり、
+# CPU を1コア以上使い続けて UI がもっさりする(N100 で実測: gnome-shell 150% → 7%)。
+sudo usermod -aG render,video "$USER"
+warn "GPU のグループ変更は再起動後に有効になります(Linger 有効時はログアウトでは反映されない)"
+
 sudo grdctl --system rdp enable
 sudo systemctl enable --now gnome-remote-desktop.service
 if has ufw && sudo ufw status | grep -q "Status: active"; then
