@@ -10,7 +10,6 @@ fi
 EXTENSIONS=(
   tactile@lundal.io                        # Super+T でグリッド配置
   just-perfection-desktop@just-perfection  # パネル等の細かい調整
-  blur-my-shell@aunetx                     # ぼかし
   space-bar@luchrioh                       # ワークスペース番号をトップバーに表示
   undecorate@sun.wxg@gmail.com             # タイトルバーを消す
   tophat@fflewddur.github.io               # CPU/メモリ表示
@@ -29,6 +28,9 @@ for ext in "${EXTENSIONS[@]}"; do
   fi
 done
 
+# RDP 越しでは半透明・ぼかしは動画圧縮と相性が悪く転送量が増えるので使わない(入っていたら無効化)
+gnome-extensions disable blur-my-shell@aunetx 2>/dev/null || true
+
 log "拡張機能の設定を読み込み"
 dconf load /org/gnome/shell/extensions/ < "$REPO_DIR/config/dconf/shell-extensions.ini"
 
@@ -37,6 +39,8 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-purple-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Yaru-purple'
 gsettings set org.gnome.desktop.interface cursor-theme 'Yaru'
+# RDP 越しではアニメーションの途中コマもすべて転送されて重くなるので切る
+gsettings set org.gnome.desktop.interface enable-animations false
 gsettings set org.gnome.mutter center-new-windows true
 gsettings set org.gnome.desktop.calendar show-weekdate true
 gsettings set org.gnome.desktop.interface clock-show-weekday true

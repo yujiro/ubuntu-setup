@@ -30,7 +30,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 | 30-japanese-input | Fcitx5 + Hazkey(ライブ変換)、JIS配列、かな=ON / 英数=OFF | 済 |
 | 40-remote-desktop | GNOME リモートログイン(RDP)有効化。認証情報は実行時に入力 | 未(要sudo) |
 | 50-fonts | UI: Noto Sans CJK JP / 等幅: UDEV Gothic NF、fontconfig で日本語字形を優先 | 済 |
-| 60-gnome | GNOME 拡張7つ + 設定、Yaru-purple-dark、Dock | 済 |
+| 60-gnome | GNOME 拡張6つ + 設定、Yaru-purple-dark、Dock。RDP 向けにアニメーションとぼかしはオフ | 済 |
 | 62-usage-bar | トップバーに CPU/メモリ(TopHat)、GPU 稼働率(Intel)、Claude / Codex の残量(自作拡張 `usage-bar` + `bin/ai-usage-status`) | 済(拡張の表示は要再ログイン) |
 | 65-window-tiling | ウィンドウ配置のショートカット(Raycast と同じキー。半分/四隅/最大化/中央1/3。3分割は同梱の自作拡張 `gnome-extensions/window-thirds`) | 済 |
 | 68-mac-shortcuts | Cmd+W / Cmd+Q(閉じる)、Cmd+Shift+3/4/5(スクリーンショット)を Ubuntu で受ける | 済 |
@@ -51,6 +51,8 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 - Karabiner の assets JSON を書き換えても有効中のルールには反映されない。ルールを削除 → Add predefined rule で入れ直す。
 - **Option+F4 (Alt+F4) も届かない。** 確実に届くのは `Ctrl+Option+Shift+<キー>` の形 → 中継キーはこの形に統一している。
 - **RDP セッションは GPU を使えず、ソフトウェア描画になって重い。** ユーザーを `render`,`video` グループに入れて再起動すると直る(モジュール40に組み込み済み)。確認: `top -H -p $(pgrep -x gnome-shell)` に `llvmpipe` スレッドが居なければ OK。
+- **スクロールの重さは RDP の H.264 圧縮(GNOME 46 は CPU で圧縮)が上限。** 効くのは 有線LAN > ぼかし/アニメーションをオフ(60番で設定済み)> Windows App の Retina 最適化オフ。
+- **NoMachine を入れない。** GNOME Shell の起動設定を書き換えて描画ライブラリ(libnxegl)を注入するため、GPU 描画と組み合わさるとカーソルの残像が出る。入れてしまったら `sudo apt remove nomachine-personal-edition` → 再ログイン。
 - どのキーが届いているかは `GTK_IM_MODULE=xim xev -event keyboard` で確認できる。
 
 ## メンテナンス
