@@ -1,5 +1,5 @@
 {
-  "title": "Windows App: 英数/かな/Cmd+Space/ウィンドウ配置/Cmd+W・Q をリモートの Ubuntu に届ける",
+  "title": "Windows App: 英数/かな/Cmd+Space/ウィンドウ配置/Cmd+W・Q/スクリーンショット をリモートの Ubuntu に届ける",
   "rules": [
     {
       "description": "Windows App前面時: かな→半角/全角(IME ON), 英数→Shift+半角/全角(IME OFF)",
@@ -505,6 +505,110 @@
           "to": [
             {
               "key_code": "q",
+              "modifiers": [
+                "left_control",
+                "left_option",
+                "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Windows App前面時: Cmd+Shift+3/4/5 → Ctrl+Option+Shift+S/A/R (Ubuntu のスクリーンショット: 全画面 / 範囲選択UI / 収録UI)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "3",
+            "modifiers": {
+              "mandatory": [
+                "command",
+                "shift"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "s",
+              "modifiers": [
+                "left_control",
+                "left_option",
+                "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "4",
+            "modifiers": {
+              "mandatory": [
+                "command",
+                "shift"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "a",
+              "modifiers": [
+                "left_control",
+                "left_option",
+                "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "5",
+            "modifiers": {
+              "mandatory": [
+                "command",
+                "shift"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "r",
               "modifiers": [
                 "left_control",
                 "left_option",

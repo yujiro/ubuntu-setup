@@ -33,7 +33,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 | 60-gnome | GNOME 拡張7つ + 設定、Yaru-purple-dark、Dock | 済 |
 | 62-usage-bar | トップバーに CPU/メモリ(TopHat)、GPU 稼働率(Intel)、Claude / Codex の残量(自作拡張 `usage-bar` + `bin/ai-usage-status`) | 済(拡張の表示は要再ログイン) |
 | 65-window-tiling | ウィンドウ配置のショートカット(Raycast と同じキー。半分/四隅/最大化/中央1/3。3分割は同梱の自作拡張 `gnome-extensions/window-thirds`) | 済 |
-| 68-mac-shortcuts | Cmd+W / Cmd+Q を Ubuntu で受ける(中継キーで「ウィンドウを閉じる」) | 済 |
+| 68-mac-shortcuts | Cmd+W / Cmd+Q(閉じる)、Cmd+Shift+3/4/5(スクリーンショット)を Ubuntu で受ける | 済 |
 | 70-ulauncher | ulauncher。Mac からは Cmd+Space(Karabiner で Ctrl+Option+Space に変換)、実機は Super+Space | 済 |
 | 80-dev-tools | mise、Node.js、Codex CLI、git 初期設定 | 済 |
 
