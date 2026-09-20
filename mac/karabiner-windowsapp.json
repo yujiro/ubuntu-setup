@@ -1,5 +1,5 @@
 {
-  "title": "Windows App: 英数/かな/Cmd+Space/ウィンドウ配置 をリモートの Ubuntu に届ける",
+  "title": "Windows App: 英数/かな/Cmd+Space/ウィンドウ配置/Cmd+W・Q をリモートの Ubuntu に届ける",
   "rules": [
     {
       "description": "Windows App前面時: かな→半角/全角(IME ON), 英数→Shift+半角/全角(IME OFF)",
@@ -411,6 +411,102 @@
                 "left_control",
                 "left_option",
                 "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Windows App前面時: Cmd+W → Ctrl+W, Cmd+Q → Alt+F4 を Ubuntu に送る (Windows App 自体の終了は Cmd+Shift+Q)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "q",
+            "modifiers": {
+              "mandatory": [
+                "command",
+                "shift"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "q",
+              "modifiers": [
+                "left_command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "w",
+            "modifiers": {
+              "mandatory": [
+                "command"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "w",
+              "modifiers": [
+                "left_control"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "q",
+            "modifiers": {
+              "mandatory": [
+                "command"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "f4",
+              "modifiers": [
+                "left_option"
               ]
             }
           ],

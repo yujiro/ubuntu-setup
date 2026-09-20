@@ -1,0 +1,96 @@
+{
+  "description": "Windows App前面時: Cmd+W → Ctrl+W, Cmd+Q → Alt+F4 を Ubuntu に送る (Windows App 自体の終了は Cmd+Shift+Q)",
+  "manipulators": [
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "q",
+        "modifiers": {
+          "mandatory": [
+            "command",
+            "shift"
+          ],
+          "optional": [
+            "caps_lock"
+          ]
+        }
+      },
+      "to": [
+        {
+          "key_code": "q",
+          "modifiers": [
+            "left_command"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "type": "frontmost_application_if",
+          "bundle_identifiers": [
+            "^com\\.microsoft\\.rdc\\.macos$"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "w",
+        "modifiers": {
+          "mandatory": [
+            "command"
+          ],
+          "optional": [
+            "caps_lock"
+          ]
+        }
+      },
+      "to": [
+        {
+          "key_code": "w",
+          "modifiers": [
+            "left_control"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "type": "frontmost_application_if",
+          "bundle_identifiers": [
+            "^com\\.microsoft\\.rdc\\.macos$"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "q",
+        "modifiers": {
+          "mandatory": [
+            "command"
+          ],
+          "optional": [
+            "caps_lock"
+          ]
+        }
+      },
+      "to": [
+        {
+          "key_code": "f4",
+          "modifiers": [
+            "left_option"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "type": "frontmost_application_if",
+          "bundle_identifiers": [
+            "^com\\.microsoft\\.rdc\\.macos$"
+          ]
+        }
+      ]
+    }
+  ]
+}

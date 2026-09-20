@@ -11,6 +11,9 @@ Windows App が前面のときだけ、次の変換を行う。Mac 本体の操�
 | Ctrl+Option+1/2/3/4 | 同上 | 左上/左下/右上/右下 1/4 に配置 |
 | Ctrl+Option+Enter | 同上 | 最大化 |
 | Ctrl+Option+M | 同上 | 中央 1/3 に配置 |
+| Cmd+W | Ctrl+W | タブ/ウィンドウを閉じる |
+| Cmd+Q | Option+F4 (Alt+F4) | ウィンドウを閉じる(アプリ終了) |
+| Cmd+Shift+Q | Cmd+Q | **Windows App 自体を終了**(Cmd+Q を Ubuntu に渡すための代替) |
 
 ## 準備(初回のみ)
 
@@ -30,6 +33,7 @@ Complex Modifications → **Add your own rule** → 編集欄の中身を全部�
 - `paste-rule-1-ime.json` … かな/英数
 - `paste-rule-2-cmd-space.json` … Cmd+Space
 - `paste-rule-3-window-tiling.json` … ウィンドウ配置(Raycast の Window Management と同じキー)
+- `paste-rule-4-mac-shortcuts.json` … Cmd+W / Cmd+Q
 
 (この欄に貼れるのは `description` と `manipulators` を持つ「ルール1個」だけ。`karabiner-windowsapp.json` を貼るとエラーになる)
 
@@ -37,7 +41,7 @@ Complex Modifications → **Add your own rule** → 編集欄の中身を全部�
 
 `karabiner-windowsapp.json`(`title` と `rules` を持つ配布形式)を
 `~/.config/karabiner/assets/complex_modifications/` に置き、
-Complex Modifications → **Add predefined rule** → 3つのルールを Enable。
+Complex Modifications → **Add predefined rule** → 4つのルールを Enable。
 
 ## 修正するとき
 
