@@ -32,7 +32,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 | 50-fonts | UI: Noto Sans CJK JP / 等幅: UDEV Gothic NF、fontconfig で日本語字形を優先 | 済 |
 | 60-gnome | GNOME 拡張7つ + 設定、Yaru-purple-dark、Dock | 済 |
 | 65-window-tiling | ウィンドウ配置のショートカット(Raycast と同じキー。半分/四隅/最大化/中央1/3。3分割は同梱の自作拡張 `gnome-extensions/window-thirds`) | 済 |
-| 68-mac-shortcuts | Cmd+W / Cmd+Q を Ubuntu で受ける(Alt+F4 で閉じる設定) | 済 |
+| 68-mac-shortcuts | Cmd+W / Cmd+Q を Ubuntu で受ける(中継キーで「ウィンドウを閉じる」) | 済 |
 | 70-ulauncher | ulauncher。Mac からは Cmd+Space(Karabiner で Ctrl+Option+Space に変換)、実機は Super+Space | 済 |
 | 80-dev-tools | mise、Node.js、Codex CLI、git 初期設定 | 済 |
 
@@ -48,6 +48,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 - **Cmd+Space は macOS(Spotlight)に、Option+Space は Raycast に取られて届かない。** → Karabiner で Cmd+Space を Ctrl+Option+Space に変換して送り、Ubuntu 側はそれで ulauncher を開く。
 - Karabiner が効かないときは、まず macOS の「入力監視」に Karabiner-Core-Service(旧 karabiner_grabber)があるか確認。
 - Karabiner の assets JSON を書き換えても有効中のルールには反映されない。ルールを削除 → Add predefined rule で入れ直す。
+- **Option+F4 (Alt+F4) も届かない。** 確実に届くのは `Ctrl+Option+Shift+<キー>` の形 → 中継キーはこの形に統一している。
 - どのキーが届いているかは `GTK_IM_MODULE=xim xev -event keyboard` で確認できる。
 
 ## メンテナンス

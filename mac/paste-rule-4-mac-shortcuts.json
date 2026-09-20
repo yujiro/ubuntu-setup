@@ -1,5 +1,5 @@
 {
-  "description": "Windows App前面時: Cmd+W → Ctrl+W, Cmd+Q → Alt+F4 を Ubuntu に送る (Windows App 自体の終了は Cmd+Shift+Q)",
+  "description": "Windows App前面時: Cmd+W → Ctrl+W, Cmd+Q → Ctrl+Option+Shift+Q (Ubuntuのウィンドウを閉じる)。Windows App 自体の終了は Cmd+Shift+Q",
   "manipulators": [
     {
       "type": "basic",
@@ -77,9 +77,11 @@
       },
       "to": [
         {
-          "key_code": "f4",
+          "key_code": "q",
           "modifiers": [
-            "left_option"
+            "left_control",
+            "left_option",
+            "left_shift"
           ]
         }
       ],

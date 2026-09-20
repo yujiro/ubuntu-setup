@@ -12,7 +12,7 @@ Windows App が前面のときだけ、次の変換を行う。Mac 本体の操�
 | Ctrl+Option+Enter | 同上 | 最大化 |
 | Ctrl+Option+M | 同上 | 中央 1/3 に配置 |
 | Cmd+W | Ctrl+W | タブ/ウィンドウを閉じる |
-| Cmd+Q | Option+F4 (Alt+F4) | ウィンドウを閉じる(アプリ終了) |
+| Cmd+Q | Ctrl+Option+Shift+Q | ウィンドウを閉じる(アプリ終了)。Option+F4 は Windows App を通過しないため中継キー方式 |
 | Cmd+Shift+Q | Cmd+Q | **Windows App 自体を終了**(Cmd+Q を Ubuntu に渡すための代替) |
 
 ## 準備(初回のみ)
