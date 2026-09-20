@@ -17,7 +17,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 
    途中で聞かれるもの: sudo パスワード、RDP 用のユーザー名/パスワード、GNOME 拡張のインストール確認ダイアログ。
 3. **ログアウト → ログイン**(日本語入力と docker グループが有効になる)
-4. **Mac 側(初回のみ)**: [mac/README.md](mac/README.md) の手順で Karabiner-Elements にルールを入れる
+4. **Mac 側(初回のみ)**: [mac/README.md](mac/README.md) の手順で Karabiner-Elements にルールを入れる(貼り付け用は `mac/paste-rule-*.json`)
 5. 手作業で残るもの: `gh auth login` / `sudo tailscale up` / 1Password・Chrome・Claude へのサインイン
 
 ## モジュール
