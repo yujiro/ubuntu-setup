@@ -7,6 +7,9 @@ Windows App が前面のときだけ、次の変換を行う。Mac 本体の操�
 | かな | 半角/全角 | 日本語入力 ON(何度押しても ON) |
 | 英数 | Shift+半角/全角 | 日本語入力 OFF(何度押しても OFF) |
 | Cmd+Space | Ctrl+Option+Space | ulauncher を開く/閉じる |
+| Ctrl+Option+←→↑↓ | Ctrl+Option+Shift+同キー | ウィンドウを左/右/上/下 半分に配置 |
+| Ctrl+Option+1/2/3/4 | 同上 | 左上/左下/右上/右下 1/4 に配置 |
+| Ctrl+Option+Enter | 同上 | 最大化 |
 
 ## 準備(初回のみ)
 
@@ -25,6 +28,7 @@ Complex Modifications → **Add your own rule** → 編集欄の中身を全部�
 
 - `paste-rule-1-ime.json` … かな/英数
 - `paste-rule-2-cmd-space.json` … Cmd+Space
+- `paste-rule-3-window-tiling.json` … ウィンドウ配置(Raycast の Window Management と同じキー)
 
 (この欄に貼れるのは `description` と `manipulators` を持つ「ルール1個」だけ。`karabiner-windowsapp.json` を貼るとエラーになる)
 
@@ -32,7 +36,7 @@ Complex Modifications → **Add your own rule** → 編集欄の中身を全部�
 
 `karabiner-windowsapp.json`(`title` と `rules` を持つ配布形式)を
 `~/.config/karabiner/assets/complex_modifications/` に置き、
-Complex Modifications → **Add predefined rule** → 2つのルールを Enable。
+Complex Modifications → **Add predefined rule** → 3つのルールを Enable。
 
 ## 修正するとき
 
