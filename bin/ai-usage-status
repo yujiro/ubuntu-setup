@@ -39,8 +39,12 @@ def claude():
     except Exception:
         return "Claude --", ["Claude: データなし(Claude アプリを起動すると記録されます)"]
     stale = "?" if NOW - t > 3600 else ""
-    bar = f"Claude {100 - fh}%{stale}" if fh is not None else "Claude --"   # バーには5時間枠を出す
-    detail = [f"Claude  5時間枠: 残り {100 - fh}%   週間枠: 残り {100 - sd}%   ({age(NOW - t)}の値)"]
+    # バーには 5時間枠 と 週間・全モデル の残りを出す
+    parts = [f"{label} {100 - v}%" for label, v in (("5h", fh), ("週", sd)) if v is not None]
+    bar = ("Claude " + " · ".join(parts) + stale) if parts else "Claude --"
+    detail = ["Claude  " + "   ".join(f"{label}: 残り {100 - v}%" for label, v in (("5時間枠", fh), ("週間・全モデル", sd)) if v is not None)
+              + f"   ({age(NOW - t)}の値)",
+              "        ※ モデル別の週間枠(Fable など)はローカルに記録されないため表示できません"]
     return bar, detail
 
 
