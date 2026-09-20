@@ -10,10 +10,11 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 2. **実機の画面で** 端末を開いて実行(RDP はまだ使えないため最初の1回だけ実機で):
 
    ```bash
-   sudo apt-get update && sudo apt-get install -y git
-   git clone <このリポジトリのURL> ~/ubuntu-setup
-   ~/ubuntu-setup/setup.sh
+   sudo apt-get update && sudo apt-get install -y curl
+   curl -fsSL https://raw.githubusercontent.com/yujiro/ubuntu-setup/main/bootstrap.sh | bash
    ```
+
+   (git を入れて `~/ubuntu-setup` に clone し、`setup.sh` を実行する。手動でやる場合は `git clone https://github.com/yujiro/ubuntu-setup.git ~/ubuntu-setup && ~/ubuntu-setup/setup.sh`)
 
    途中で聞かれるもの: sudo パスワード、RDP 用のユーザー名/パスワード、GNOME 拡張のインストール確認ダイアログ。
 3. **ログアウト → ログイン**(日本語入力と docker グループが有効になる)

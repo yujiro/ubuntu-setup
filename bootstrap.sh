@@ -1,9 +1,9 @@
 #!/bin/bash
 # まっさらな Ubuntu で最初に実行する入口。git を入れてこのリポジトリを取得し、setup.sh を実行する。
-#   REPO_URL を自分のリポジトリに書き換えて使う。private リポジトリの場合は先に gh auth login が必要。
+#   curl -fsSL https://raw.githubusercontent.com/yujiro/ubuntu-setup/main/bootstrap.sh | bash
 set -euo pipefail
 
-REPO_URL="${REPO_URL:-https://github.com/CHANGE-ME/ubuntu-setup.git}"
+REPO_URL="${REPO_URL:-https://github.com/yujiro/ubuntu-setup.git}"
 DEST="${DEST:-$HOME/ubuntu-setup}"
 
 sudo apt-get update
