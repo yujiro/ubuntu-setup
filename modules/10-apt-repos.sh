@@ -30,13 +30,22 @@ curl -fsSL https://downloads.1password.com/linux/debian/debsig/1password.pol \
 curl -fsSL https://downloads.1password.com/linux/keys/1password.asc \
   | gpg --dearmor | sudo tee /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg >/dev/null
 
-add_repo google-chrome https://dl.google.com/linux/linux_signing_key.pub \
-  /usr/share/keyrings/google-chrome.gpg yes \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] https://dl.google.com/linux/chrome-stable/deb/ stable main"
+# Chrome と VS Code はパッケージ自身が <名前>.sources (deb822形式) を作って管理する。
+# 同じファイル名・形式で書いておかないと、インストール後に定義が二重になり apt が警告を出す。
+add_repo_deb822() {
+  local name="$1" key_url="$2" key_path="$3" uri="$4"
+  curl -fsSL "$key_url" | gpg --dearmor | sudo tee "$key_path" >/dev/null
+  sudo chmod a+r "$key_path"
+  sudo rm -f "/etc/apt/sources.list.d/$name.list"
+  printf 'Types: deb\nURIs: %s\nSuites: stable\nComponents: main\nArchitectures: amd64\nSigned-By: %s\n' \
+    "$uri" "$key_path" | sudo tee "/etc/apt/sources.list.d/$name.sources" >/dev/null
+}
 
-add_repo vscode https://packages.microsoft.com/keys/microsoft.asc \
-  /usr/share/keyrings/microsoft.gpg yes \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main"
+add_repo_deb822 google-chrome https://dl.google.com/linux/linux_signing_key.pub \
+  /usr/share/keyrings/google-chrome.gpg https://dl.google.com/linux/chrome-stable/deb/
+
+add_repo_deb822 vscode https://packages.microsoft.com/keys/microsoft.asc \
+  /usr/share/keyrings/microsoft.gpg https://packages.microsoft.com/repos/code
 
 add_repo docker https://download.docker.com/linux/ubuntu/gpg \
   /etc/apt/keyrings/docker.asc no \

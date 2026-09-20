@@ -25,7 +25,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 
 | 番号 | 内容 | ローカル検証 |
 |---|---|---|
-| 10-apt-repos | 1Password / Chrome / VS Code / Docker / gh / mise / Claude Desktop / ulauncher の apt リポジトリ | 未(要sudo) |
+| 10-apt-repos | 1Password / Chrome / VS Code / Docker / gh / mise / Claude Desktop / ulauncher の apt リポジトリ | 済 |
 | 20-packages | 上記アプリ + CLI ツール、tailscale(snap) | 未(要sudo) |
 | 30-japanese-input | Fcitx5 + Hazkey(ライブ変換)、JIS配列、かな=ON / 英数=OFF | 済 |
 | 40-remote-desktop | GNOME リモートログイン(RDP)有効化。認証情報は実行時に入力 | 未(要sudo) |
