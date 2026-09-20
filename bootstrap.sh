@@ -15,4 +15,5 @@ else
   git clone "$REPO_URL" "$DEST"
 fi
 
-exec "$DEST/setup.sh" "$@"
+# curl | bash で起動された場合でも対話入力(RDPのパスワード等)ができるよう端末を標準入力にする
+exec "$DEST/setup.sh" "$@" </dev/tty
