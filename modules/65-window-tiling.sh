@@ -4,6 +4,7 @@
 #   Ctrl+Option+Shift+<キー> に変換して送り(そのままだと Mac 側の Raycast が先に取るため)、
 #   Ubuntu 側はその中継キーで配置する。実機のキーボードでは Ctrl+Alt+Shift+<キー> を直接押せばよい。
 #     ←/→/↑/↓ … 左/右/上/下 半分     1/2/3/4 … 左上/左下/右上/右下 1/4     Enter … 最大化
+#     M … 中央 1/3 (Tiling Assistant に3分割が無いため、同梱の自作拡張 window-thirds で実現)
 source "$(dirname "$0")/../lib/common.sh"
 
 if ! in_desktop_session; then
@@ -16,6 +17,27 @@ if ! gnome-extensions list | grep -qx "$EXT"; then
   apt_install gnome-shell-extension-ubuntu-tiling-assistant
 fi
 gnome-extensions enable "$EXT"
+
+log "自作拡張 window-thirds をインストール(中央1/3 など)"
+WT="window-thirds@ubuntu-setup"
+WT_DIR="$HOME/.local/share/gnome-shell/extensions/$WT"
+mkdir -p "$WT_DIR"
+cp -r "$REPO_DIR/gnome-extensions/$WT/." "$WT_DIR/"
+glib-compile-schemas "$WT_DIR/schemas"
+if gnome-extensions list | grep -qx "$WT"; then
+  gnome-extensions enable "$WT"
+else
+  # Wayland では新しい拡張は次回ログインまで認識されない。有効化リストに入れておけばログイン時に読み込まれる
+  python3 - "$WT" <<'PY'
+import ast, subprocess, sys
+uuid = sys.argv[1]
+out = subprocess.run(["gsettings", "get", "org.gnome.shell", "enabled-extensions"], check=True, capture_output=True, text=True).stdout.strip()
+cur = [] if out.startswith("@as") else list(ast.literal_eval(out))
+if uuid not in cur:
+    subprocess.run(["gsettings", "set", "org.gnome.shell", "enabled-extensions", str(cur + [uuid])], check=True)
+PY
+  warn "window-thirds は次回ログインから有効になります"
+fi
 
 log "Tiling Assistant の設定とショートカット"
 python3 - <<'EOF'
@@ -69,5 +91,5 @@ for key, k in BINDINGS.items():
 
 # 半分に寄せたあと「残り半分に何を置くか」のポップアップは出さない(Raycast に合わせる)
 subprocess.run(["gsettings", "set", TA, "enable-tiling-popup", "false"], check=True)
-print("   登録: Ctrl+Alt+Shift + ←→↑↓ / 1 2 3 4 / Enter")
+print("   登録: Ctrl+Alt+Shift + ←→↑↓ / 1 2 3 4 / Enter / M")
 EOF

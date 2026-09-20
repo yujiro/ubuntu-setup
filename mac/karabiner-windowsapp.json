@@ -91,7 +91,7 @@
       ]
     },
     {
-      "description": "Windows App前面時: Ctrl+Option+(矢印/1-4/Enter) → Ctrl+Option+Shift+同キー (Raycastと同じキーで Ubuntu のウィンドウを配置)",
+      "description": "Windows App前面時: Ctrl+Option+(矢印/1-4/Enter/M) → Ctrl+Option+Shift+同キー (Raycastと同じキーで Ubuntu のウィンドウを配置)",
       "manipulators": [
         {
           "type": "basic",
@@ -374,6 +374,39 @@
           "to": [
             {
               "key_code": "return_or_enter",
+              "modifiers": [
+                "left_control",
+                "left_option",
+                "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "m",
+            "modifiers": {
+              "mandatory": [
+                "control",
+                "option"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "m",
               "modifiers": [
                 "left_control",
                 "left_option",

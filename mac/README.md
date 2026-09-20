@@ -10,6 +10,7 @@ Windows App が前面のときだけ、次の変換を行う。Mac 本体の操�
 | Ctrl+Option+←→↑↓ | Ctrl+Option+Shift+同キー | ウィンドウを左/右/上/下 半分に配置 |
 | Ctrl+Option+1/2/3/4 | 同上 | 左上/左下/右上/右下 1/4 に配置 |
 | Ctrl+Option+Enter | 同上 | 最大化 |
+| Ctrl+Option+M | 同上 | 中央 1/3 に配置 |
 
 ## 準備(初回のみ)
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.window-thirds" path="/org/gnome/shell/extensions/window-thirds/">
+    <key name="middle-third" type="as"><default><![CDATA[['<Control><Alt><Shift>m']]]></default><summary>Middle third</summary></key>
+    <key name="first-third" type="as"><default>[]</default><summary>First (left) third</summary></key>
+    <key name="last-third" type="as"><default>[]</default><summary>Last (right) third</summary></key>
+    <key name="first-two-thirds" type="as"><default>[]</default><summary>First two thirds</summary></key>
+    <key name="last-two-thirds" type="as"><default>[]</default><summary>Last two thirds</summary></key>
+  </schema>
+</schemalist>

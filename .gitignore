@@ -1,2 +1,3 @@
 *.bak-ubuntu-setup
 .DS_Store
+gschemas.compiled

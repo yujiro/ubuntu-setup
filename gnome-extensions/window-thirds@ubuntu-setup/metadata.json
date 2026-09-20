@@ -1,0 +1,8 @@
+{
+  "uuid": "window-thirds@ubuntu-setup",
+  "name": "Window Thirds",
+  "description": "Place the focused window on a third (or two thirds) of the screen with a shortcut. Complements Tiling Assistant, which has no thirds.",
+  "shell-version": ["45", "46", "47", "48"],
+  "settings-schema": "org.gnome.shell.extensions.window-thirds",
+  "url": "https://github.com/yujiro/ubuntu-setup"
+}
