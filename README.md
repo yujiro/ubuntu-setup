@@ -31,7 +31,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 | 40-remote-desktop | GNOME リモートログイン(RDP)有効化。認証情報は実行時に入力 | 未(要sudo) |
 | 50-fonts | UI: Noto Sans CJK JP / 等幅: UDEV Gothic NF、fontconfig で日本語字形を優先 | 済 |
 | 60-gnome | GNOME 拡張7つ + 設定、Yaru-purple-dark、Dock | 済 |
-| 62-usage-bar | トップバーに CPU/メモリ(TopHat)と Claude / Codex の残量(自作拡張 `usage-bar` + `bin/ai-usage-status`) | 済(拡張の表示は要再ログイン) |
+| 62-usage-bar | トップバーに CPU/メモリ(TopHat)、GPU 稼働率(Intel)、Claude / Codex の残量(自作拡張 `usage-bar` + `bin/ai-usage-status`) | 済(拡張の表示は要再ログイン) |
 | 65-window-tiling | ウィンドウ配置のショートカット(Raycast と同じキー。半分/四隅/最大化/中央1/3。3分割は同梱の自作拡張 `gnome-extensions/window-thirds`) | 済 |
 | 68-mac-shortcuts | Cmd+W / Cmd+Q を Ubuntu で受ける(中継キーで「ウィンドウを閉じる」) | 済 |
 | 70-ulauncher | ulauncher。Mac からは Cmd+Space(Karabiner で Ctrl+Option+Space に変換)、実機は Super+Space | 済 |

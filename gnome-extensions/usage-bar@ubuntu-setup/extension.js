@@ -10,13 +10,34 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 const COMMAND = GLib.build_filenamev([GLib.get_home_dir(), '.local', 'bin', 'ai-usage-status']);
 const INTERVAL_SECONDS = 60;
 
+// Intel GPU: RC6 (GPU の深いアイドル状態) に居た時間の累計。root 不要で読める。
+// 稼働率 = 1 - (RC6 に居た時間の増分 / 経過時間)。/proc/*/fdinfo の drm-engine-render 集計とほぼ一致する(実測)。
+const GPU_RC6_FILES = [
+    '/sys/class/drm/card0/gt/gt0/rc6_residency_ms',
+    '/sys/class/drm/card1/gt/gt0/rc6_residency_ms',
+];
+const GPU_INTERVAL_SECONDS = 3;
+
 export default class UsageBarExtension extends Extension {
     enable() {
         this._button = new PanelMenu.Button(0.5, 'AI Usage Bar');
+        const box = new St.BoxLayout();
+        this._gpuLabel = new St.Label({text: '', y_align: Clutter.ActorAlign.CENTER, style: 'margin-right: 10px;'});
         this._label = new St.Label({text: '…', y_align: Clutter.ActorAlign.CENTER});
-        this._button.add_child(this._label);
+        box.add_child(this._gpuLabel);
+        box.add_child(this._label);
+        this._button.add_child(box);
         this._button.menu.connect('open-state-changed', (_m, open) => open && this._refresh());
         Main.panel.addToStatusArea(this.uuid, this._button, 0, 'right');
+
+        this._gpuFile = GPU_RC6_FILES.find(f => GLib.file_test(f, GLib.FileTest.EXISTS)) ?? null;
+        if (this._gpuFile) {
+            this._refreshGpu();
+            this._gpuTimerId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, GPU_INTERVAL_SECONDS, () => {
+                this._refreshGpu();
+                return GLib.SOURCE_CONTINUE;
+            });
+        }
 
         this._refresh();
         this._timerId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, INTERVAL_SECONDS, () => {
@@ -30,11 +51,37 @@ export default class UsageBarExtension extends Extension {
             GLib.source_remove(this._timerId);
             this._timerId = 0;
         }
+        if (this._gpuTimerId) {
+            GLib.source_remove(this._gpuTimerId);
+            this._gpuTimerId = 0;
+        }
         this._cancellable?.cancel();
         this._cancellable = null;
         this._button?.destroy();
         this._button = null;
         this._label = null;
+        this._gpuLabel = null;
+        this._gpuPrev = null;
+    }
+
+    _refreshGpu() {
+        if (!this._gpuLabel)
+            return;
+        try {
+            const [ok, bytes] = GLib.file_get_contents(this._gpuFile);
+            if (!ok)
+                return;
+            const rc6 = parseInt(new TextDecoder().decode(bytes).trim());
+            const now = GLib.get_monotonic_time() / 1000;   // ms
+            if (this._gpuPrev && now > this._gpuPrev.now) {
+                const idle = (rc6 - this._gpuPrev.rc6) / (now - this._gpuPrev.now);
+                const busy = Math.round(100 * Math.min(1, Math.max(0, 1 - idle)));
+                this._gpuLabel.text = `GPU ${busy}%`;
+            }
+            this._gpuPrev = {rc6, now};
+        } catch (e) {
+            this._gpuLabel.text = '';
+        }
     }
 
     _refresh() {

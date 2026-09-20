@@ -1,5 +1,6 @@
 #!/bin/bash
-# トップバーに CPU/メモリ(TopHat)と、Claude / Codex の残量(自作拡張 usage-bar)を表示する
+# トップバーに CPU/メモリ(TopHat)と、GPU 稼働率・Claude / Codex の残量(自作拡張 usage-bar)を表示する
+#   GPU は Intel 内蔵GPU のみ対応(/sys/class/drm/card*/gt/gt0/rc6_residency_ms を読む。root 不要)。他のGPUでは GPU 欄が出ないだけ。
 #   残量はローカルのファイルから読むだけ(bin/ai-usage-status の冒頭コメント参照)。ネットワークや認証情報は使わない。
 source "$(dirname "$0")/../lib/common.sh"
 
