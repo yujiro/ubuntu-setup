@@ -30,7 +30,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 | 30-japanese-input | Fcitx5 + Hazkey(ライブ変換)、JIS配列、かな=ON / 英数=OFF | 済 |
 | 40-remote-desktop | GNOME リモートログイン(RDP)有効化。認証情報は実行時に入力 | 未(要sudo) |
 | 50-fonts | UI: Noto Sans CJK JP / 等幅: UDEV Gothic NF、fontconfig で日本語字形を優先 | 済 |
-| 60-gnome | GNOME 拡張6つ + 設定、Yaru-purple-dark、Dock。RDP 向けにアニメーションとぼかしはオフ | 済 |
+| 60-gnome | GNOME 拡張6つ + 設定、Yaru-purple-dark、Dock。RDP 向けにアニメーション・ぼかし・自動ロックはオフ | 済 |
 | 62-usage-bar | トップバーに CPU/メモリ(TopHat)、GPU 稼働率(Intel)、Claude / Codex の残量(自作拡張 `usage-bar` + `bin/ai-usage-status`) | 済(拡張の表示は要再ログイン) |
 | 65-window-tiling | ウィンドウ配置のショートカット(Raycast と同じキー。半分/四隅/最大化/中央1/3。3分割は同梱の自作拡張 `gnome-extensions/window-thirds`) | 済 |
 | 68-mac-shortcuts | Cmd+W / Cmd+Q(閉じる)、Cmd+Shift+3/4/5(スクリーンショット)を Ubuntu で受ける | 済 |

@@ -41,6 +41,9 @@ gsettings set org.gnome.desktop.interface icon-theme 'Yaru-purple'
 gsettings set org.gnome.desktop.interface cursor-theme 'Yaru'
 # RDP 越しではアニメーションの途中コマもすべて転送されて重くなるので切る
 gsettings set org.gnome.desktop.interface enable-animations false
+# RDP 専用の据え置き機なので、放置で自動ロックしない(繋ぎ直すたびにパスワードを求められるのを避ける)。
+# 手動ロック(Super+L)は使える。実機に他人が触れる環境で使うなら true に戻すこと。
+gsettings set org.gnome.desktop.screensaver lock-enabled false
 gsettings set org.gnome.mutter center-new-windows true
 gsettings set org.gnome.desktop.calendar show-weekdate true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
