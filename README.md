@@ -56,5 +56,5 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 
 - Hazkey / UDEV Gothic はバージョンと SHA256 を固定している(`modules/30-*.sh`, `modules/50-*.sh` の先頭)。上げるときは両方を書き換える。
 - GNOME 拡張の設定を変えたら書き出して commit する:
-  `dconf dump /org/gnome/shell/extensions/ > config/dconf/shell-extensions.ini`
+  `dconf dump /org/gnome/shell/extensions/ > config/dconf/shell-extensions.ini`(`[space-bar/state]` など実行時の状態は手で除く)
 - 秘密情報(パスワード、鍵、トークン)はこのリポジトリに入れない。
