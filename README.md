@@ -30,7 +30,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 | 40-remote-desktop | GNOME リモートログイン(RDP)有効化。認証情報は実行時に入力 | 未(要sudo) |
 | 50-fonts | UI: Noto Sans CJK JP / 等幅: UDEV Gothic NF、fontconfig で日本語字形を優先 | 済 |
 | 60-gnome | GNOME 拡張7つ + 設定、Yaru-purple-dark、Dock | 済 |
-| 70-ulauncher | ulauncher。Alt(Option)+Space / Super+Space で起動 | 済 |
+| 70-ulauncher | ulauncher。Mac からは Cmd+Space(Karabiner で Ctrl+Option+Space に変換)、実機は Super+Space | 済 |
 | 80-dev-tools | mise、Node.js、Codex CLI、git 初期設定 | 済 |
 
 ```bash
@@ -42,7 +42,7 @@ Omakub は使わず、必要な部分だけを自前で持つ。
 
 - Windows App は **英数キーを送らない**。かなキーも Karabiner 有効時は届かない。無変換も届かない。
   → Mac 側の Karabiner で「かな→半角/全角」「英数→Shift+半角/全角」に変換し、Fcitx5 側でそれぞれ ON専用 / OFF専用に割り当てている(トグルではないので何度押しても状態が反転しない)。
-- **Cmd+Space は macOS(Spotlight)に取られて届かない。** → ulauncher は Option+Space で開く。Karabiner のルールを入れれば Cmd+Space でも開く。
+- **Cmd+Space は macOS(Spotlight)に、Option+Space は Raycast に取られて届かない。** → Karabiner で Cmd+Space を Ctrl+Option+Space に変換して送り、Ubuntu 側はそれで ulauncher を開く。
 - Karabiner が効かないときは、まず macOS の「入力監視」に Karabiner-Core-Service(旧 karabiner_grabber)があるか確認。
 - Karabiner の assets JSON を書き換えても有効中のルールには反映されない。ルールを削除 → Add predefined rule で入れ直す。
 - どのキーが届いているかは `GTK_IM_MODULE=xim xev -event keyboard` で確認できる。

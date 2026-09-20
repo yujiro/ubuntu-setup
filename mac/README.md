@@ -6,7 +6,7 @@ Windows App が前面のときだけ、次の変換を行う。Mac 本体の操�
 |---|---|---|
 | かな | 半角/全角 | 日本語入力 ON(何度押しても ON) |
 | 英数 | Shift+半角/全角 | 日本語入力 OFF(何度押しても OFF) |
-| Cmd+Space | Option+Space | ulauncher を開く/閉じる |
+| Cmd+Space | Ctrl+Option+Space | ulauncher を開く/閉じる |
 
 ## 準備(初回のみ)
 

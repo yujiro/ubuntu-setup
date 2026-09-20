@@ -1,10 +1,10 @@
 #!/bin/bash
 # ulauncher(アプリランチャー)。Mac の Windows App(RDP) 越しでも呼び出せるようにする。
 #   Wayland では ulauncher 自身のホットキーが効かないため、GNOME のカスタムショートカットから
-#   ulauncher-toggle を呼ぶ。Cmd+Space は macOS に取られて届かないので Alt(Option)+Space を主にする。
-#     Alt+Space   … RDP 越しでも届く(Mac では Option+Space)
-#     Super+Space … 実機のキーボード用
-#   さらに mac/karabiner-windowsapp.json で Cmd+Space → Option+Space に変換すれば Spotlight と同じ操作感になる。
+#   ulauncher-toggle を呼ぶ。Cmd+Space は macOS(Spotlight)に、Option+Space は Raycast 等に取られて
+#   届かないため、Mac 側の Karabiner で Cmd+Space → Ctrl+Option+Space に変換して送る。
+#     Ctrl+Alt+Space … RDP 越し用の中継キー(手で押す想定ではない)
+#     Super+Space    … 実機のキーボード用
 source "$(dirname "$0")/../lib/common.sh"
 
 has ulauncher || apt_install ulauncher wmctrl
@@ -45,9 +45,8 @@ if ! in_desktop_session; then
   exit 0
 fi
 
-log "ショートカットを登録 (Alt+Space / Super+Space)"
+log "ショートカットを登録 (Ctrl+Alt+Space / Super+Space)"
 # GNOME 既定の割り当てを空ける
-gsettings set org.gnome.desktop.wm.keybindings activate-window-menu "[]"
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source "[]"          # Fcitx5 を使うので不要
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "[]"
 
@@ -56,7 +55,7 @@ import ast, subprocess
 SCHEMA = "org.gnome.settings-daemon.plugins.media-keys"
 BASE = "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
 CMD = 'sh -c "pgrep -x ulauncher >/dev/null && ulauncher-toggle || setsid -f env GDK_BACKEND=x11 ulauncher"'
-ENTRIES = {"ulauncher-alt": "<Alt>space", "ulauncher-super": "<Super>space"}
+ENTRIES = {"ulauncher-remote": "<Control><Alt>space", "ulauncher-super": "<Super>space"}
 
 def gs(*a): return subprocess.run(["gsettings", *a], check=True, capture_output=True, text=True).stdout.strip()
 

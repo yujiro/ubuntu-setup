@@ -1,5 +1,5 @@
 {
-  "description": "Windows App前面時: Cmd+Space → Option+Space (Ubuntu側で ulauncher を開く)",
+  "description": "Windows App前面時: Cmd+Space → Ctrl+Option+Space (Ubuntu側で ulauncher を開く)",
   "manipulators": [
     {
       "type": "basic",
@@ -14,9 +14,7 @@
       "to": [
         {
           "key_code": "spacebar",
-          "modifiers": [
-            "left_option"
-          ]
+          "modifiers": ["left_control", "left_option"]
         }
       ],
       "conditions": [
