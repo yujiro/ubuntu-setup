@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+"""Claude / Codex の残量をトップバー用に出力する。
+1行目 = バーに出す短い文字列、2行目以降 = クリック時のメニューに出す詳細。
+
+データ元(どちらもローカルファイル。ネットワークアクセスも認証情報の読み取りもしない):
+  Claude: ~/.config/Claude/plan-usage-history.json  … Claude デスクトップアプリが記録するプラン使用率
+          (非公開の内部ファイル。アプリ起動中のみ更新され、形式は将来変わる可能性がある)
+  Codex : ~/.codex/sessions/**/*.jsonl の rate_limits … Codex を使ったときだけ更新される
+"""
+import calendar, glob, json, os, re, time
+
+NOW = time.time()
+HOME = os.path.expanduser("~")
+
+
+def fmt_left(sec):
+    if sec <= 0:
+        return "リセット済み"
+    h, m = divmod(int(sec) // 60, 60)
+    d, h = divmod(h, 24)
+    return f"あと{d}日{h}時間" if d else (f"あと{h}時間{m:02d}分" if h else f"あと{m}分")
+
+
+def age(sec):
+    m = int(sec) // 60
+    if m < 2:
+        return "たった今"
+    if m < 90:
+        return f"{m}分前"
+    return f"{m // 60}時間前" if m < 2880 else f"{m // 1440}日前"
+
+
+def claude():
+    try:
+        samples = json.load(open(f"{HOME}/.config/Claude/plan-usage-history.json"))["samples"]
+        s = samples[-1]
+        fh, sd = s["u"].get("fh"), s["u"].get("sd")
+        t = s["t"] / 1000
+    except Exception:
+        return "Claude --", ["Claude: データなし(Claude アプリを起動すると記録されます)"]
+    stale = "?" if NOW - t > 3600 else ""
+    bar = f"Claude {100 - fh}%{stale}" if fh is not None else "Claude --"   # バーには5時間枠を出す
+    detail = [f"Claude  5時間枠: 残り {100 - fh}%   週間枠: 残り {100 - sd}%   ({age(NOW - t)}の値)"]
+    return bar, detail
+
+
+def codex():
+    # ファイルの更新時刻は当てにならない(古いセッションが後から書き換えられる)ので、行内の timestamp で最新を選ぶ
+    best_ts, best = "", None
+    for path in glob.glob(f"{HOME}/.codex/sessions/*/*/*/*.jsonl"):
+        try:
+            with open(path, errors="ignore") as f:
+                for line in f:
+                    if '"rate_limits"' not in line:
+                        continue
+                    ts = re.search(r'"timestamp":"([^"]+)"', line)
+                    if ts and ts.group(1) > best_ts:
+                        best_ts, best = ts.group(1), line
+        except OSError:
+            continue
+    if not best:
+        return "Codex --", ["Codex: データなし(codex を一度使うと記録されます)"]
+    try:
+        rl = json.loads(re.search(r'"rate_limits":(\{.*?"plan_type":[^,}]*)', best).group(1) + "}")
+        t = calendar.timegm(time.strptime(best_ts[:19], "%Y-%m-%dT%H:%M:%S"))
+    except Exception:
+        return "Codex --", ["Codex: rate_limits の形式が変わったため読み取れません"]
+    out = []
+    for key in ("primary", "secondary"):
+        w = rl.get(key) or {}
+        used, reset = w.get("used_percent"), w.get("resets_at") or 0
+        if used is None:
+            continue
+        mins = w.get("window_minutes") or 0   # 枠の長さはプランや時期で変わるので値から決める
+        label = {300: "5時間枠", 10080: "週間枠"}.get(mins, f"{mins // 60}時間枠" if mins else key)
+        if reset and reset < NOW:      # 枠がリセット済みなら満タン扱い
+            used = 0
+        out.append((label, 100 - round(used), fmt_left(reset - NOW) if reset else ""))
+    if not out:
+        return "Codex --", ["Codex: 使用率の記録なし"]
+    bar = f"Codex {min(p for _, p, _ in out)}%"   # バーには一番厳しい枠を出す
+    detail = ["Codex   " + "   ".join(f"{l}: 残り {p}% ({r})" for l, p, r in out) + f"   ({age(NOW - t)}の値)"]
+    return bar, detail
+
+
+(cb, cd), (xb, xd) = claude(), codex()
+print(f"{cb}  {xb}")
+print("\n".join(cd + xd))

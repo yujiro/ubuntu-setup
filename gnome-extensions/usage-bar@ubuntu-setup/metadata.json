@@ -1,0 +1,7 @@
+{
+  "uuid": "usage-bar@ubuntu-setup",
+  "name": "AI Usage Bar",
+  "description": "Shows the output of ~/.local/bin/ai-usage-status (Claude / Codex remaining quota) in the top bar. First line = panel text, remaining lines = menu.",
+  "shell-version": ["45", "46", "47", "48"],
+  "url": "https://github.com/yujiro/ubuntu-setup"
+}

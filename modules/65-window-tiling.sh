@@ -19,25 +19,7 @@ fi
 gnome-extensions enable "$EXT"
 
 log "自作拡張 window-thirds をインストール(中央1/3 など)"
-WT="window-thirds@ubuntu-setup"
-WT_DIR="$HOME/.local/share/gnome-shell/extensions/$WT"
-mkdir -p "$WT_DIR"
-cp -r "$REPO_DIR/gnome-extensions/$WT/." "$WT_DIR/"
-glib-compile-schemas "$WT_DIR/schemas"
-if gnome-extensions list | grep -qx "$WT"; then
-  gnome-extensions enable "$WT"
-else
-  # Wayland では新しい拡張は次回ログインまで認識されない。有効化リストに入れておけばログイン時に読み込まれる
-  python3 - "$WT" <<'PY'
-import ast, subprocess, sys
-uuid = sys.argv[1]
-out = subprocess.run(["gsettings", "get", "org.gnome.shell", "enabled-extensions"], check=True, capture_output=True, text=True).stdout.strip()
-cur = [] if out.startswith("@as") else list(ast.literal_eval(out))
-if uuid not in cur:
-    subprocess.run(["gsettings", "set", "org.gnome.shell", "enabled-extensions", str(cur + [uuid])], check=True)
-PY
-  warn "window-thirds は次回ログインから有効になります"
-fi
+install_local_extension "window-thirds@ubuntu-setup"
 
 log "Tiling Assistant の設定とショートカット"
 python3 - <<'EOF'
